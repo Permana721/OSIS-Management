@@ -1,10 +1,11 @@
 package request
 
 type UserRequest struct {
-	Name  string `json:"name" form:"name" binding:"required"`
-	Email string `json:"email" form:"email" binding:"required"`
+	Name     string `json:"name" form:"name" binding:"required"`
+	Email    string `json:"email" form:"email" binding:"required"`
+	Kelas    string `json:"kelas" form:"kelas" binding:"required"`
 	Password string `json:"password" form:"password" binding:"required"`
-	Age   int    `json:"age" form:"age" binding:"required"`
+	Proker	 string `json:"proker" form:"proker" binding:"required"`
 }
 
 type LoginRequest struct {

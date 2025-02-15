@@ -11,32 +11,23 @@ import (
 	"os"
 	"golang.org/x/crypto/bcrypt"
 	"github.com/golang-jwt/jwt/v4"
-	// "gorm.io/gorm"
-
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetAllUser(ctx *gin.Context) {
-	// Mendeklarasikan variabel users yang akan menampung data user
 	users := new([]models.User)
 
-	// Menarik data dari tabel users di database
 	err := database.DB.Table("users").Find(&users).Error
 
-	// Jika terjadi error dalam menarik data dari database
 	if err != nil {
-		// Mengembalikan respons error jika gagal mengambil data
 		ctx.AbortWithStatusJSON(500, gin.H{
 			"message": "Internal server error",
 		})
 		return
 	}
 
-	// Mengembalikan data siswa dalam bentuk JSON dengan status 200
-	ctx.JSON(200, gin.H{
-		"data": users, // Mengembalikan data siswa yang berhasil diambil
-	})
+	ctx.JSON(200, users)
 }
 
 
@@ -95,10 +86,11 @@ func Store(ctx *gin.Context) {
 
 	users := new(models.User)
 	users.Name = &userReq.Name
+	users.Kelas = &userReq.Kelas
 	users.Email = &userReq.Email
 	hashedPasswordStr := string(hashedPassword)
 	users.Password = &hashedPasswordStr
-	users.Age = &userReq.Age
+	users.Proker = &userReq.Proker
 
 	errDb := database.DB.Table("users").Create(&users).Error
 	if errDb != nil {
@@ -175,8 +167,9 @@ func Update(ctx *gin.Context) {
 
 	// Update data user
 	user.Name = &userReq.Name
+	user.Kelas = &userReq.Kelas
 	user.Email = &userReq.Email
-	user.Age = &userReq.Age
+	user.Proker = &userReq.Proker
 
 	errUpdate := database.DB.Table("users").Where("id = ?", id).Updates(&user).Error
 	if errUpdate != nil {
@@ -186,10 +179,7 @@ func Update(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"message": "Data updated successfully",
-		"data":    user,
-	})
+	ctx.JSON(200, user)
 }
 
 
