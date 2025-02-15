@@ -6,6 +6,7 @@ type UserRequest struct {
 	Kelas    string `json:"kelas" form:"kelas" binding:"required"`
 	Password string `json:"password" form:"password" binding:"required"`
 	Proker	 string `json:"proker" form:"proker" binding:"required"`
+	Foto	 string `json:"foto" form:"foto" binding:"required"`
 }
 
 type LoginRequest struct {

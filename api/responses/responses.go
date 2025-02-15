@@ -7,4 +7,5 @@ type UserResponse struct {
 	Email		*string  	`json:"email"`
 	Password    *string  	`json:"password"`
 	Proker     	*string    	`json:"proker"`
+	Foto		*string    	`json:"foto"`
 }

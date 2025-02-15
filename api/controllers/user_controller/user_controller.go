@@ -1,6 +1,9 @@
 package user_controller
 
 import (
+	"math/rand"
+	"path/filepath"
+    // "strconv"
 	"time"
 	"api/database"
 	"api/models/user_model"
@@ -57,54 +60,73 @@ func GetById(ctx *gin.Context) {
 }
 
 func Store(ctx *gin.Context) {
-	userReq := new(request.UserRequest)
+	// Ambil input dari form-data
+	name := ctx.PostForm("name")
+	kelas := ctx.PostForm("kelas")
+	email := ctx.PostForm("email")
+	password := ctx.PostForm("password")
+	proker := ctx.PostForm("proker")
 
-	if errReq := ctx.ShouldBind(&userReq); errReq != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": errReq.Error(),
-		})
+	// Cek apakah email sudah digunakan
+	var userExist models.User
+	if err := database.DB.Where("email = ?", email).First(&userExist).Error; err == nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Email already used."})
 		return
 	}
 
-	userEmailExist := new(models.User)
-	database.DB.Table("users").Where("email = ?", userReq.Email).First(&userEmailExist)
-
-	if userEmailExist.Email != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "Email already used.",
-		})
-		return
-	}
-
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userReq.Password), bcrypt.DefaultCost)
+	// Hash password
+	hashedPasswordBytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Failed to hash password.",
-		})
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to hash password."})
+		return
+	}
+	hashedPasswordStr := string(hashedPasswordBytes)
+
+	// Proses upload foto
+	file, err := ctx.FormFile("photo")
+	var filename string
+
+	if err == nil {
+		// Generate nama file unik: "foto-XXX.jpg"
+		rand.Seed(time.Now().UnixNano())
+		randomNumber := rand.Intn(900) + 100 // Angka 3 digit (100-999)
+		ext := filepath.Ext(file.Filename)
+		filename = fmt.Sprintf("foto-%d%s", randomNumber, ext)
+
+		// Path penyimpanan ke dalam folder frontend React (public/uploads/)
+		savePath := fmt.Sprintf("../web/public/uploads/%s", filename)
+
+		// Simpan file ke folder uploads dalam frontend
+		if err := ctx.SaveUploadedFile(file, savePath); err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to upload file."})
+			return
+		}
+	} else {
+		filename = "" // Jika tidak ada file yang diunggah
+	}
+
+	// Simpan ke database
+	user := models.User{
+		Name:     &name,
+		Kelas:    &kelas,
+		Email:    &email,
+		Password: &hashedPasswordStr,
+		Proker:   &proker,
+		Foto:    &filename, // Hanya simpan nama file, bukan path lengkap
+	}
+
+	if err := database.DB.Create(&user).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "Can't create data."})
 		return
 	}
 
-	users := new(models.User)
-	users.Name = &userReq.Name
-	users.Kelas = &userReq.Kelas
-	users.Email = &userReq.Email
-	hashedPasswordStr := string(hashedPassword)
-	users.Password = &hashedPasswordStr
-	users.Proker = &userReq.Proker
-
-	errDb := database.DB.Table("users").Create(&users).Error
-	if errDb != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Can't create data.",
-		})
-		return
-	}
-
+	// Beri respon sukses
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "Data Successfully Created",
-		"data": users,
+		"data":    user,
 	})
 }
+
 
 func Update(ctx *gin.Context) {
 	id := ctx.Param("id")
