@@ -1,9 +1,12 @@
+
+
 package bootstrap
 
 import (
 	"api/configs"
 	"api/configs/app_config"
 	"api/database"
+	"api/migration"
 	"api/routes"
 	"log"
 
@@ -12,21 +15,27 @@ import (
 )
 
 func BootstrapApp() {
-	// load .env file
+	// Load .env file
 	err := godotenv.Load()
 	if err != nil {
-		log.Println("Error loading .env file")
+		log.Fatal("Error loading .env file") // Hentikan program jika gagal
 	}
 
-	// init config
+	// Init config
 	configs.InitConfig()
 
-	// connect to database
+	// Connect to database
 	database.ConnectDatabase()
-	// init gin engine
+
+	// Jalankan migrasi
+	migration.MigrateDatabase() 
+
+	// Init Gin engine
 	app := gin.Default()
-	// init routes
+
+	// Init routes
 	routes.InitRoute(app)
-	// run app
-    app.Run(app_config.PORT)
+
+	// Jalankan server dengan PORT yang benar
+	app.Run(app_config.PORT)
 }

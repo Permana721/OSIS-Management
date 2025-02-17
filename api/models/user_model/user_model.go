@@ -1,11 +1,11 @@
 package models
 
 type User struct {
-	ID       *int    	`json:"id"`
-	Name     *string 	`json:"name"`
-	Kelas    *string 	`json:"kelas"`
-	Email    *string 	`json:"email"`
-	Password *string 	`json:"password"`
-	Proker   *string 	`json:"proker"`
-	Foto     *string 	`json:"foto"`
+	ID       *uint    `gorm:"primaryKey" json:"id"`
+	Name     *string  `gorm:"type:varchar(255)" json:"name"`
+	Kelas    *string  `gorm:"type:varchar(255)" json:"kelas"`
+	Email    *string  `gorm:"type:varchar(255);unique" json:"email"`
+	Password *string  `gorm:"type:varchar(255)" json:"password"`
+	Proker   *string  `gorm:"type:varchar(255)" json:"proker"`
+	Foto     *string  `gorm:"type:varchar(255)" json:"foto"`
 }
