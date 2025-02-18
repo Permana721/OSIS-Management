@@ -10,12 +10,14 @@ const EditUser = () => {
     const [formData, setFormData] = useState({
         name: user?.name || "",
         kelas: user?.kelas || "",
+        no_urut: user?.no_urut || "",
+        role : user?.role || "",
+        posisi : user?.posisi || "",
         email: user?.email || "",
         password: user?.password || "",
         proker: user?.proker || "",
-        foto: user?.foto || "", // Menyimpan nama file sebelumnya
+        foto: user?.foto || "",
     });
-    // const [newFoto, setNewFoto] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -32,6 +34,9 @@ const EditUser = () => {
         const formDataToSend = new FormData();
         formDataToSend.append("name", formData.name);
         formDataToSend.append("kelas", formData.kelas);
+        formDataToSend.append("no_urut", formData.no_urut);
+        formDataToSend.append("role", formData.role);
+        formDataToSend.append("posisi", formData.posisi);
         formDataToSend.append("email", formData.email);
         formDataToSend.append("password", formData.password);
         formDataToSend.append("proker", formData.proker);
@@ -80,6 +85,43 @@ const EditUser = () => {
                         />
                     </div>
                     <div className="mb-4">
+                        <label className="block text-gray-700 font-medium mb-1">No Urut</label>
+                        <input
+                            type="number"
+                            name="no_urut"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Masukkan kelas OSIS"
+                            value={formData.no_urut}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-medium mb-1">Role</label>
+                        <select
+                            name="role"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={formData.role}
+                            onChange={handleChange}
+                        >
+                            <option value="">Pilih Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-medium mb-1">Posisi</label>
+                        <select
+                            name="posisi"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={formData.posisi}
+                            onChange={handleChange}
+                        >
+                            <option value="">Pilih Posisi</option>
+                            <option value="ketua">Ketua</option>
+                            <option value="wakil_ketua">Wakil Ketua</option>
+                        </select>
+                    </div>
+                    <div className="mb-4">
                         <label className="block text-gray-700 font-medium mb-1">Email</label>
                         <input
                             type="email"
@@ -111,9 +153,6 @@ const EditUser = () => {
                             onChange={handleChange}
                         />
                     </div>
-                    
-                    {/* Menampilkan gambar saat ini */}
-                
 
                     <div className="mb-4">
                         <label className="block text-gray-700 font-medium mb-1">Upload Foto Baru</label>

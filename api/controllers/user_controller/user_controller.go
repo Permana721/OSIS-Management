@@ -2,15 +2,16 @@ package user_controller
 
 import (
 	"math/rand"
+	"os"
 	"path/filepath"
 
-	// "strconv"
 	"api/database"
 	models "api/models/user_model"
 	"api/request"
 	"api/responses"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -62,9 +63,18 @@ func GetById(ctx *gin.Context) {
 func Store(ctx *gin.Context) {
 	name := ctx.PostForm("name")
 	kelas := ctx.PostForm("kelas")
+	no_urutStr := ctx.PostForm("no_urut") 
+	role := ctx.PostForm("role")
+	posisi := ctx.PostForm("posisi")
 	email := ctx.PostForm("email")
 	password := ctx.PostForm("password")
 	proker := ctx.PostForm("proker")
+
+	no_urut, err := strconv.Atoi(no_urutStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Nomor urut harus berupa angka."})
+		return
+	}
 
 	var userExist models.User
 	if err := database.DB.Where("email = ?", email).First(&userExist).Error; err == nil {
@@ -83,10 +93,8 @@ func Store(ctx *gin.Context) {
 	var filename string
 
 	if err == nil {
-		rand.Seed(time.Now().UnixNano())
-		randomNumber := rand.Intn(900) + 100
-		ext := filepath.Ext(file.Filename)
-		filename = fmt.Sprintf("foto-%d%s", randomNumber, ext)
+		ext := filepath.Ext(file.Filename) 
+		filename = fmt.Sprintf("%s%s", name, ext) 
 
 		savePath := fmt.Sprintf("../web/public/uploads/%s", filename)
 
@@ -101,6 +109,9 @@ func Store(ctx *gin.Context) {
 	user := models.User{
 		Name:     &name,
 		Kelas:    &kelas,
+		No_Urut:  &no_urut,
+		Role:     &role,
+		Posisi:   &posisi,
 		Email:    &email,
 		Password: &hashedPasswordStr,
 		Proker:   &proker,
@@ -120,12 +131,20 @@ func Store(ctx *gin.Context) {
 
 func Update(c *gin.Context) {
 	id := c.Param("id")
-
 	name := c.PostForm("name")
 	kelas := c.PostForm("kelas")
+	no_urutStr := c.PostForm("no_urut")
+	role := c.PostForm("role")
+	posisi := c.PostForm("posisi")
 	email := c.PostForm("email")
 	password := c.PostForm("password")
 	proker := c.PostForm("proker")
+
+	no_urut, err := strconv.Atoi(no_urutStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Nomor urut harus berupa angka."})
+		return
+	}
 
 	var user models.User
 	if err := database.DB.First(&user, id).Error; err != nil {
@@ -135,7 +154,6 @@ func Update(c *gin.Context) {
 
 	file, err := c.FormFile("foto")
 	var filename string
-
 	if err == nil {
 		rand.Seed(time.Now().UnixNano())
 		randomNumber := rand.Intn(900) + 100
@@ -147,14 +165,26 @@ func Update(c *gin.Context) {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image"})
 			return
 		}
+
+		if user.Foto != nil && *user.Foto != "" {
+			oldFilePath := fmt.Sprintf("../web/public/uploads/%s", *user.Foto)
+			if err := os.Remove(oldFilePath); err != nil {
+				fmt.Println("Error removing old file:", err)
+			}
+		}
+	} else {
+		filename = *user.Foto
 	}
 
 	user.Name = &name
 	user.Kelas = &kelas
+	user.No_Urut = &no_urut
+	user.Role = &role
+	user.Posisi = &posisi
 	user.Email = &email
 	user.Password = &password
 	user.Proker = &proker
-	user.Foto = &filename
+	user.Foto = &filename 
 
 	if err := database.DB.Save(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user"})

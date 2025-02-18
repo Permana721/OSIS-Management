@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 const AddUser = () => {
     const [name, setName] = useState("");
     const [kelas, setKelas] = useState("");
+    const [no_urut, setNoUrut] = useState("");
+    const [role, setRole] = useState("");
+    const [posisi, setPosisi] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [proker, setProker] = useState("");
@@ -28,6 +31,9 @@ const AddUser = () => {
         const formData = new FormData();
         formData.append("name", name);
         formData.append("kelas", kelas);
+        formData.append("no_urut", no_urut);
+        formData.append("role", role);
+        formData.append("posisi", posisi);
         formData.append("email", email);
         formData.append("password", password);
         formData.append("proker", proker);
@@ -70,6 +76,42 @@ const AddUser = () => {
                             value={kelas}
                             onChange={(e) => setKelas(e.target.value)}
                         />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-medium mb-1">No_Urut</label>
+                        <input
+                            type="number"
+                            className="w-full p-2 border border-gray-300 rounded-md"
+                            placeholder="Masukkan Nomor Urut OSIS"
+                            value={no_urut}
+                            onChange={(e) => setNoUrut(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-medium mb-1">Role</label>
+                        <select
+                            name="role"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                        >
+                            <option className="hidden" value="">Pilih Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-medium mb-1">Posisi</label>
+                        <select
+                            name="posisi"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={posisi}
+                            onChange={(e) => setPosisi(e.target.value)}
+                        >
+                            <option className="hidden" value="">Pilih Posisi</option>
+                            <option value="ketua">Ketua</option>
+                            <option value="wakil_ketua">Wakil Ketua</option>
+                        </select>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 font-medium mb-1">Email</label>
