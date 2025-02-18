@@ -84,10 +84,10 @@ const AdminUser = () => {
                         <thead>
                             <tr className="bg-blue-50">
                                 <th className="p-4 border-b-2 border-gray-300">No</th>
-                                <th className="p-4 border-b-2 border-gray-300">Foto</th>
                                 <th className="p-4 border-b-2 border-gray-300">Nama</th>
                                 <th className="p-4 border-b-2 border-gray-300 hidden md:table-cell">Kelas</th>
                                 <th className="p-4 border-b-2 border-gray-300 hidden md:table-cell">Program Kerja</th>
+                                <th className="p-4 border-b-2 border-gray-300">Foto</th>
                                 <th className="p-4 border-b-2 border-gray-300">Aksi</th>
                             </tr>
                         </thead>
@@ -95,12 +95,12 @@ const AdminUser = () => {
                             {filteredUsers.map((user, index) => (
                                 <tr key={user.id} className="hover:bg-gray-50">
                                     <td className="p-4 border-b border-gray-300">{index + 1}</td>
-                                    <td className="p-4 border-b border-gray-300">
-                                        <img src={`/uploads/${user.foto}`} alt="Foto Pengguna" className="w-20 h-20 object-cover rounded-md" />
-                                    </td>
                                     <td className="p-4 border-b border-gray-300">{user.name}</td>
                                     <td className="p-4 border-b border-gray-300 hidden md:table-cell">{user.kelas}</td>
                                     <td className="p-4 border-b border-gray-300 hidden md:table-cell">{user.proker}</td>
+                                    <td className="p-4 border-b border-gray-300">
+                                        <img src={`/uploads/${user.foto}`} alt="Foto Pengguna" className="w-20 h-20 object-cover rounded-md" />
+                                    </td>
                                     <td className="p-4 border-b border-gray-300 flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
                                         <button onClick={() => handleEdit(user)} className="px-4 py-2 cursor-pointer bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto">
                                             Edit

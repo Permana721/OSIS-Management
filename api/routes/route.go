@@ -19,5 +19,4 @@ func InitRoute(app *gin.Engine) {
     route.GET("/user/:id", user_controller.GetById)
     route.PATCH("/user/update/:id", user_controller.Update)
     route.DELETE("/user/delete/:id", user_controller.Delete)
-    route.POST("/file", user_controller.HandleUploadFile)
 }
