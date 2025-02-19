@@ -11,7 +11,6 @@ const EditUser = () => {
         name: user?.name || "",
         kelas: user?.kelas || "",
         no_urut: user?.no_urut || "",
-        role : user?.role || "",
         posisi : user?.posisi || "",
         email: user?.email || "",
         password: user?.password || "",
@@ -35,7 +34,6 @@ const EditUser = () => {
         formDataToSend.append("name", formData.name);
         formDataToSend.append("kelas", formData.kelas);
         formDataToSend.append("no_urut", formData.no_urut);
-        formDataToSend.append("role", formData.role);
         formDataToSend.append("posisi", formData.posisi);
         formDataToSend.append("email", formData.email);
         formDataToSend.append("password", formData.password);
@@ -46,9 +44,11 @@ const EditUser = () => {
         }
     
         try {
+            const token = localStorage.getItem("token");
             await axios.patch(`http://localhost:8000/user/update/${user.id}`, formDataToSend, {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`
                 },
             });
             navigate("/admin/user");
@@ -94,19 +94,6 @@ const EditUser = () => {
                             value={formData.no_urut}
                             onChange={handleChange}
                         />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 font-medium mb-1">Role</label>
-                        <select
-                            name="role"
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={formData.role}
-                            onChange={handleChange}
-                        >
-                            <option value="">Pilih Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
-                        </select>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 font-medium mb-1">Posisi</label>

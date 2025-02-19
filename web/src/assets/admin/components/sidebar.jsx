@@ -26,16 +26,30 @@ const Sidebar = () => {
 
                 <h2 className="mt-6 text-gray-500 uppercase text-sm font-semibold">Account</h2>
                 <ul className="mt-2 space-y-2">
-                <li className="duration-300 hover:bg-blue-100 rounded-md">
-                    <Link
-                    to="/admin/user"
-                    className={`p-2 block rounded-md ${
-                        location.pathname === "/admin/user" ? "bg-blue-100 text-blue-600 font-semibold" : ""
-                    }`}
-                    >
-                    User
-                    </Link>
-                </li>
+                    <li className="duration-300 hover:bg-blue-100 rounded-md">
+                        <Link
+                        to="/admin/user"
+                        className={`p-2 block rounded-md ${
+                            location.pathname === "/admin/user" ? "bg-blue-100 text-blue-600 font-semibold" : ""
+                        }`}
+                        >
+                        User
+                        </Link>
+                    </li>
+                </ul>
+
+                <h2 className="mt-6 text-gray-500 uppercase text-sm font-semibold">Auth</h2>
+                <ul className="mt-2 space-y-2">
+                    <li className="duration-300 hover:bg-blue-100 rounded-md">
+                        <Link
+                        to="/admin/user"
+                        className={`p-2 block rounded-md ${
+                            location.pathname === "/admin/user" ? "bg-blue-100 text-blue-600 font-semibold" : ""
+                        }`}
+                        >
+                        Logout
+                        </Link>
+                    </li>
                 </ul>
             </nav>
         </aside>

@@ -13,7 +13,12 @@ const AdminDashboard = () => {
 
     const getUsers = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/user");
+            const token = localStorage.getItem("token");
+            const response = await axios.get("http://localhost:8000/user", {
+                headers: {
+                    Authorization: `Bearer ${token}` 
+                }
+            });
             setUserCount(response.data.length); 
         } catch (error) {
             console.error("Error fetching user count:", error);

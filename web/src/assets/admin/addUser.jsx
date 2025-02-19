@@ -7,10 +7,7 @@ const AddUser = () => {
     const [name, setName] = useState("");
     const [kelas, setKelas] = useState("");
     const [no_urut, setNoUrut] = useState("");
-    const [role, setRole] = useState("");
     const [posisi, setPosisi] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [proker, setProker] = useState("");
     const [photo, setPhoto] = useState(null);
     const [preview, setPreview] = useState(null);
@@ -32,16 +29,17 @@ const AddUser = () => {
         formData.append("name", name);
         formData.append("kelas", kelas);
         formData.append("no_urut", no_urut);
-        formData.append("role", role);
         formData.append("posisi", posisi);
-        formData.append("email", email);
-        formData.append("password", password);
         formData.append("proker", proker);
         formData.append("photo", photo);
 
         try {
+            const token = localStorage.getItem("token");
             await axios.post("http://localhost:8000/user/add", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: { 
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`
+                },
             });
             navigate("/admin/user");
         } catch (error) {
@@ -78,7 +76,7 @@ const AddUser = () => {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 font-medium mb-1">No_Urut</label>
+                        <label className="block text-gray-700 font-medium mb-1">No Urut</label>
                         <input
                             type="number"
                             className="w-full p-2 border border-gray-300 rounded-md"
@@ -86,19 +84,6 @@ const AddUser = () => {
                             value={no_urut}
                             onChange={(e) => setNoUrut(e.target.value)}
                         />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 font-medium mb-1">Role</label>
-                        <select
-                            name="role"
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                        >
-                            <option className="hidden" value="">Pilih Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
-                        </select>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 font-medium mb-1">Posisi</label>
@@ -112,26 +97,6 @@ const AddUser = () => {
                             <option value="ketua">Ketua</option>
                             <option value="wakil_ketua">Wakil Ketua</option>
                         </select>
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 font-medium mb-1">Email</label>
-                        <input
-                            type="text"
-                            className="w-full p-2 border border-gray-300 rounded-md"
-                            placeholder="Masukkan email OSIS"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 font-medium mb-1">Password</label>
-                        <input
-                            type="password"
-                            className="w-full p-2 border border-gray-300 rounded-md"
-                            placeholder="Masukkan password OSIS"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 font-medium mb-1">Program Kerja</label>

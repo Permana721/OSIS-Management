@@ -3,41 +3,41 @@ package middleware
 import (
 	"net/http"
 	"strings"
+    "api/helpers"
 
-	"github.com/golang-jwt/jwt/v4"
+	// "github.com/golang-jwt/jwt/v4"
 	"github.com/gin-gonic/gin"
 )
 
-func AuthMiddlewares() gin.HandlerFunc {
-    return func(c *gin.Context) {
-        authHeader := c.GetHeader("Authorization")
-        if authHeader == "" {
-            c.JSON(http.StatusUnauthorized, gin.H{"message": "Harap login terlebih dahulu"})
-            c.Abort()
-            return
-        }
+func AuthMiddleware() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		authHeader := ctx.GetHeader("Authorization")
+		if authHeader == "" {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Harap login terlebih dahulu"})
+			ctx.Abort()
+			return
+		}
 
-        parts := strings.Split(authHeader, " ")
-        if len(parts) != 2 || parts[0] != "Bearer" {
-            c.JSON(http.StatusUnauthorized, gin.H{"message": "Format token tidak valid"})
-            c.Abort()
-            return
-        }
+		// Format token harus "Bearer <TOKEN>"
+		parts := strings.Split(authHeader, " ")
+		if len(parts) != 2 || parts[0] != "Bearer" {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Format token tidak valid"})
+			ctx.Abort()
+			return
+		}
 
-        tokenString := parts[1]
-        token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-            if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-                return nil, jwt.ErrSignatureInvalid
-            }
-            return []byte("your_secret_key"), nil
-        })
+		tokenString := parts[1]
+		claims, err := helpers.DecodeJWT(tokenString)
+		if err != nil {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Token tidak valid atau kedaluwarsa"})
+			ctx.Abort()
+			return
+		}
 
-        if err != nil || !token.Valid {
-            c.JSON(http.StatusUnauthorized, gin.H{"message": "Token tidak valid atau telah kedaluwarsa"})
-            c.Abort()
-            return
-        }
+		// Simpan informasi user di context agar bisa digunakan di handler lain
+		ctx.Set("user_id", claims["id"])
+		ctx.Set("user_email", claims["email"])
 
-        c.Next()
-    }
+		ctx.Next()
+	}
 }

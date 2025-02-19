@@ -7,14 +7,14 @@ import (
 
 	"api/database"
 	models "api/models/user_model"
-	"api/request"
+	"api/helpers"
 	"api/responses"
 	"fmt"
 	"net/http"
 	"strconv"
 	"time"
 
-	"github.com/golang-jwt/jwt/v4"
+	// "github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/gin-gonic/gin"
@@ -64,7 +64,6 @@ func Store(ctx *gin.Context) {
 	name := ctx.PostForm("name")
 	kelas := ctx.PostForm("kelas")
 	no_urutStr := ctx.PostForm("no_urut") 
-	role := ctx.PostForm("role")
 	posisi := ctx.PostForm("posisi")
 	email := ctx.PostForm("email")
 	password := ctx.PostForm("password")
@@ -110,7 +109,6 @@ func Store(ctx *gin.Context) {
 		Name:     &name,
 		Kelas:    &kelas,
 		No_Urut:  &no_urut,
-		Role:     &role,
 		Posisi:   &posisi,
 		Email:    &email,
 		Password: &hashedPasswordStr,
@@ -129,12 +127,46 @@ func Store(ctx *gin.Context) {
 	})
 }
 
+func Register(ctx *gin.Context) {
+	name := ctx.PostForm("name")
+	email := ctx.PostForm("email")
+	password := ctx.PostForm("password")
+
+	var userExist models.User
+	if err := database.DB.Where("email = ?", email).First(&userExist).Error; err == nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Email already used."})
+		return
+	}
+
+	hashedPasswordBytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to hash password."})
+		return
+	}
+	hashedPasswordStr := string(hashedPasswordBytes)
+
+	user := models.User{
+		Name:     &name,
+		Email:    &email,
+		Password: &hashedPasswordStr,
+	}
+
+	if err := database.DB.Create(&user).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "Can't create data."})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "Data Successfully Created",
+		"data":    user,
+	})
+}
+
 func Update(c *gin.Context) {
 	id := c.Param("id")
 	name := c.PostForm("name")
 	kelas := c.PostForm("kelas")
 	no_urutStr := c.PostForm("no_urut")
-	role := c.PostForm("role")
 	posisi := c.PostForm("posisi")
 	email := c.PostForm("email")
 	password := c.PostForm("password")
@@ -179,7 +211,6 @@ func Update(c *gin.Context) {
 	user.Name = &name
 	user.Kelas = &kelas
 	user.No_Urut = &no_urut
-	user.Role = &role
 	user.Posisi = &posisi
 	user.Email = &email
 	user.Password = &password
@@ -232,47 +263,42 @@ type LoginRequest struct {
 }
 
 func Login(ctx *gin.Context) {
-	loginReq := new(request.LoginRequest)
+	var loginReq LoginRequest
 
 	if err := ctx.ShouldBindJSON(&loginReq); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid request data",
-		})
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Format data tidak valid"})
 		return
 	}
 
-	user := new(models.User)
-	err := database.DB.Table("users").Where("email = ?", loginReq.Email).First(&user).Error
+	// Cari user berdasarkan email
+	var user models.User
+	err := database.DB.Where("email = ?", loginReq.Email).First(&user).Error
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"message": "Invalid email or password",
-		})
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Email atau password salah"})
 		return
 	}
 
+	// Cocokkan password
 	err = bcrypt.CompareHashAndPassword([]byte(*user.Password), []byte(loginReq.Password))
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"message": "Invalid email or password",
-		})
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Email atau password salah"})
 		return
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"email": user.Email,
-		"exp":   time.Now().Add(24 * time.Hour).Unix(),
-	})
-
-	tokenString, err := token.SignedString([]byte("your_secret_key"))
+	// Generate token JWT
+	token, err := helpers.GenerateJWT(*user.ID, *user.Email)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Could not create token",
-		})
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "Gagal membuat token"})
 		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"message": "Login successful",
-		"token":   tokenString,
+		"message": "Login berhasil",
+		"token":   token,
+		"user": gin.H{
+			"id":    user.ID,
+			"email": user.Email,
+			"name":  user.Name,
+		},
 	})
 }
