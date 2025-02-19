@@ -18,7 +18,6 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// Format token harus "Bearer <TOKEN>"
 		parts := strings.Split(authHeader, " ")
 		if len(parts) != 2 || parts[0] != "Bearer" {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Format token tidak valid"})
@@ -34,7 +33,6 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// Simpan informasi user di context agar bisa digunakan di handler lain
 		ctx.Set("user_id", claims["id"])
 		ctx.Set("user_email", claims["email"])
 
