@@ -1,8 +1,6 @@
 package user_controller
 
 import (
-	"math/rand"
-	"os"
 	"path/filepath"
 
 	"api/database"
@@ -12,7 +10,6 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"time"
 
 	// "github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
@@ -65,19 +62,12 @@ func Store(ctx *gin.Context) {
 	kelas := ctx.PostForm("kelas")
 	no_urutStr := ctx.PostForm("no_urut") 
 	posisi := ctx.PostForm("posisi")
-	email := ctx.PostForm("email")
 	password := ctx.PostForm("password")
 	proker := ctx.PostForm("proker")
 
 	no_urut, err := strconv.Atoi(no_urutStr)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Nomor urut harus berupa angka."})
-		return
-	}
-
-	var userExist models.User
-	if err := database.DB.Where("email = ?", email).First(&userExist).Error; err == nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Email already used."})
 		return
 	}
 
@@ -110,7 +100,6 @@ func Store(ctx *gin.Context) {
 		Kelas:    &kelas,
 		No_Urut:  &no_urut,
 		Posisi:   &posisi,
-		Email:    &email,
 		Password: &hashedPasswordStr,
 		Proker:   &proker,
 		Foto:     &filename,
@@ -163,66 +152,56 @@ func Register(ctx *gin.Context) {
 }
 
 func Update(c *gin.Context) {
-	id := c.Param("id")
-	name := c.PostForm("name")
-	kelas := c.PostForm("kelas")
-	no_urutStr := c.PostForm("no_urut")
-	posisi := c.PostForm("posisi")
-	email := c.PostForm("email")
-	password := c.PostForm("password")
-	proker := c.PostForm("proker")
+    id := c.Param("id")
+    name := c.PostForm("name")
+    kelas := c.PostForm("kelas")
+    no_urutStr := c.PostForm("no_urut")
+    posisi := c.PostForm("posisi")
+    password := c.PostForm("password")
+    proker := c.PostForm("proker")
 
-	no_urut, err := strconv.Atoi(no_urutStr)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Nomor urut harus berupa angka."})
-		return
-	}
+    no_urut, err := strconv.Atoi(no_urutStr)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"message": "Nomor urut harus berupa angka."})
+        return
+    }
 
-	var user models.User
-	if err := database.DB.First(&user, id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
-		return
-	}
+    var user models.User
+    if err := database.DB.First(&user, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+        return
+    }
 
-	file, err := c.FormFile("foto")
-	var filename string
-	if err == nil {
-		rand.Seed(time.Now().UnixNano())
-		randomNumber := rand.Intn(900) + 100
-		ext := filepath.Ext(file.Filename)
-		filename = fmt.Sprintf("foto-%d%s", randomNumber, ext)
+    file, err := c.FormFile("foto")
+    var filename string
+    if err == nil {
+        ext := filepath.Ext(file.Filename)
+        filename = fmt.Sprintf("%s%s", name, ext)
 
-		savePath := fmt.Sprintf("../web/public/uploads/%s", filename)
-		if err := c.SaveUploadedFile(file, savePath); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload image"})
-			return
-		}
+        savePath := fmt.Sprintf("../web/public/uploads/%s", filename)
 
-		if user.Foto != nil && *user.Foto != "" {
-			oldFilePath := fmt.Sprintf("../web/public/uploads/%s", *user.Foto)
-			if err := os.Remove(oldFilePath); err != nil {
-				fmt.Println("Error removing old file:", err)
-			}
-		}
-	} else {
-		filename = *user.Foto
-	}
+        if err := c.SaveUploadedFile(file, savePath); err != nil {
+            c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to upload file."})
+            return
+        }
+    } else {
+        filename = *user.Foto 
+    }
 
-	user.Name = &name
-	user.Kelas = &kelas
-	user.No_Urut = &no_urut
-	user.Posisi = &posisi
-	user.Email = &email
-	user.Password = &password
-	user.Proker = &proker
-	user.Foto = &filename 
+    user.Name = &name
+    user.Kelas = &kelas
+    user.No_Urut = &no_urut
+    user.Posisi = &posisi
+    user.Password = &password
+    user.Proker = &proker
+    user.Foto = &filename
 
-	if err := database.DB.Save(&user).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user"})
-		return
-	}
+    if err := database.DB.Save(&user).Error; err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user"})
+        return
+    }
 
-	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully"})
+    c.JSON(http.StatusOK, gin.H{"message": "User updated successfully"})
 }
 
 func Delete(ctx *gin.Context) {
@@ -270,7 +249,6 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	// Cari user berdasarkan email
 	var user models.User
 	err := database.DB.Where("email = ?", loginReq.Email).First(&user).Error
 	if err != nil {
@@ -278,7 +256,6 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	// Cocokkan password
 	err = bcrypt.CompareHashAndPassword([]byte(*user.Password), []byte(loginReq.Password))
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Email atau password salah"})
