@@ -31,16 +31,17 @@ const AdminUser = () => {
     const handleSearch = (e) => {
         const query = e.target.value.toLowerCase();
         setSearchQuery(query);
+        
         if (query === "") {
             setFilteredUsers(users);
         } else {
             setFilteredUsers(users.filter(user => 
-                user.name.toLowerCase().includes(query) || 
-                user.kelas.toLowerCase().includes(query) || 
-                user.proker.toLowerCase().includes(query)
+                (user.name?.toLowerCase() || "").includes(query) || 
+                (user.kelas?.toLowerCase() || "").includes(query) || 
+                (user.proker?.toLowerCase() || "").includes(query)
             ));
         }
-    };
+    };    
 
     const handleEdit = (user) => {
         navigate("/admin/edit", { state: user });
@@ -49,7 +50,12 @@ const AdminUser = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Apakah kamu yakin ingin menghapus data ini?")) {
             try {
-                await axios.delete(`http://localhost:8000/user/delete/${id}`);
+                const token = localStorage.getItem("token");
+                await axios.delete(`http://localhost:8000/user/delete/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}` 
+                    }
+                });
                 const updatedUsers = users.filter((user) => user.id !== id);
                 setUsers(updatedUsers);
                 setFilteredUsers(updatedUsers);

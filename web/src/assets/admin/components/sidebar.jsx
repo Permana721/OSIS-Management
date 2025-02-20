@@ -1,7 +1,14 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/admin/login");
+    };
 
     return (
         <aside className="w-64 h-full bg-white shadow-lg p-6">
@@ -41,14 +48,12 @@ const Sidebar = () => {
                 <h2 className="mt-6 text-gray-500 uppercase text-sm font-semibold">Auth</h2>
                 <ul className="mt-2 space-y-2">
                     <li className="duration-300 hover:bg-blue-100 rounded-md">
-                        <Link
-                        to="/admin/user"
-                        className={`p-2 block rounded-md ${
-                            location.pathname === "/admin/user" ? "bg-blue-100 text-blue-600 font-semibold" : ""
-                        }`}
+                        <button
+                        onClick={handleLogout}
+                        className="p-2 block cursor-pointer w-full text-left rounded-md"
                         >
                         Logout
-                        </Link>
+                        </button>
                     </li>
                 </ul>
             </nav>

@@ -5,17 +5,23 @@ import AddUser from './assets/admin/addUser';
 import EditUser from './assets/admin/editUser';
 import Login from './assets/admin/auth/login';
 import Register from './assets/admin/auth/register';
+import PrivateRoute from './privateRoute';
+
+import Dashboard from './assets/user/dashboard'
 
 const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/register" element={<Register />} />
-                <Route path="/" element={<Login />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/admin/user" element={<AdminUser />} />
-                <Route path="/admin/add" element={<AddUser />} />
-                <Route path="/admin/edit" element={<EditUser />} />
+                <Route path="/" element={<Dashboard />} />
+
+                <Route path="/admin/register" element={<Register />} />
+                <Route path="/admin/login" element={<Login />} />
+
+                <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+                <Route path="/admin/user" element={<PrivateRoute><AdminUser /></PrivateRoute>} />
+                <Route path="/admin/add" element={<PrivateRoute><AddUser /></PrivateRoute>} />
+                <Route path="/admin/edit" element={<PrivateRoute><EditUser /></PrivateRoute>} />
             </Routes>
         </BrowserRouter>
     );

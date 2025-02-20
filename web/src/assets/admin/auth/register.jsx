@@ -76,7 +76,7 @@ const AddUser = () => {
 
         <p className="mt-6 text-sm text-center text-gray-600">
           Sudah punya akun?{' '}
-          <Link to="/" className="text-blue-600 hover:underline">
+          <Link to="/admin/login" className="text-blue-600 hover:underline">
             Masuk
           </Link>
         </p>

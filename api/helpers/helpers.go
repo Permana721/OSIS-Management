@@ -6,10 +6,8 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
-// Secret key untuk signing token
-var jwtKey = []byte("your_secret_key")
+var jwtKey = []byte("")
 
-// GenerateJWT untuk membuat token JWT
 func GenerateJWT(userID uint, email string) (string, error) {
 	claims := jwt.MapClaims{
 		"id":    userID,
@@ -21,7 +19,6 @@ func GenerateJWT(userID uint, email string) (string, error) {
 	return token.SignedString(jwtKey)
 }
 
-// DecodeJWT untuk memvalidasi token JWT
 func DecodeJWT(tokenString string) (jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
