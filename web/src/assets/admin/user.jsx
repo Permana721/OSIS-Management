@@ -50,12 +50,7 @@ const AdminUser = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Apakah kamu yakin ingin menghapus data ini?")) {
             try {
-                const token = localStorage.getItem("token");
-                await axios.delete(`http://localhost:8000/user/delete/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}` 
-                    }
-                });
+                await axios.delete(`http://localhost:8000/user/delete/${id}`);
                 const updatedUsers = users.filter((user) => user.id !== id);
                 setUsers(updatedUsers);
                 setFilteredUsers(updatedUsers);
@@ -74,12 +69,12 @@ const AdminUser = () => {
 
             <div className="flex-1 p-4 md:p-6">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl md:text-2xl font-bold text-blue-600">Kelola Pengguna</h2>
+                    <h2 className="text-xl md:text-2xl font-bold text-red-600">Kelola Pengguna</h2>
                 </div>
 
                 <div className="bg-white p-4 shadow-md rounded-md overflow-x-auto">
                     <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 md:gap-0 mb-4">
-                        <Link to={"/admin/add"} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto">
+                        <Link to={"/admin/add"} className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 w-full md:w-auto">
                             + Tambah Pengguna
                         </Link>
                         <input
@@ -93,7 +88,7 @@ const AdminUser = () => {
 
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-blue-50">
+                            <tr className="bg-red-50">
                                 <th className="p-4 border-b-2 border-gray-300">No</th>
                                 <th className="p-4 border-b-2 border-gray-300">Nama</th>
                                 <th className="p-4 border-b-2 border-gray-300 hidden md:table-cell">Kelas</th>
@@ -113,7 +108,7 @@ const AdminUser = () => {
                                         <img src={`/uploads/${user.foto}`} alt="Foto Pengguna" className="w-20 h-20 object-cover rounded-md" />
                                     </td>
                                     <td className="p-4 border-b border-gray-300 flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
-                                        <button onClick={() => handleEdit(user)} className="px-4 py-2 cursor-pointer bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto">
+                                        <button onClick={() => handleEdit(user)} className="px-4 py-2 cursor-pointer bg-red-500 text-white rounded-md hover:bg-red-600 w-full md:w-auto">
                                             Edit
                                         </button>
                                         <button

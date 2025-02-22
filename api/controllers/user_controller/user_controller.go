@@ -62,7 +62,8 @@ func Store(ctx *gin.Context) {
 	kelas := ctx.PostForm("kelas")
 	no_urutStr := ctx.PostForm("no_urut") 
 	posisi := ctx.PostForm("posisi")
-	password := ctx.PostForm("password")
+	visi := ctx.PostForm("visi")
+	misi := ctx.PostForm("misi")
 	proker := ctx.PostForm("proker")
 
 	no_urut, err := strconv.Atoi(no_urutStr)
@@ -70,13 +71,6 @@ func Store(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Nomor urut harus berupa angka."})
 		return
 	}
-
-	hashedPasswordBytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to hash password."})
-		return
-	}
-	hashedPasswordStr := string(hashedPasswordBytes)
 
 	file, err := ctx.FormFile("photo")
 	var filename string
@@ -100,7 +94,8 @@ func Store(ctx *gin.Context) {
 		Kelas:    &kelas,
 		No_Urut:  &no_urut,
 		Posisi:   &posisi,
-		Password: &hashedPasswordStr,
+		Visi:     &visi,
+		Misi:     &misi,
 		Proker:   &proker,
 		Foto:     &filename,
 	}
@@ -157,7 +152,8 @@ func Update(c *gin.Context) {
     kelas := c.PostForm("kelas")
     no_urutStr := c.PostForm("no_urut")
     posisi := c.PostForm("posisi")
-    password := c.PostForm("password")
+	visi := c.PostForm("visi")
+	misi := c.PostForm("misi")
     proker := c.PostForm("proker")
 
     no_urut, err := strconv.Atoi(no_urutStr)
@@ -192,7 +188,8 @@ func Update(c *gin.Context) {
     user.Kelas = &kelas
     user.No_Urut = &no_urut
     user.Posisi = &posisi
-    user.Password = &password
+	user.Visi = &visi
+	user.Misi = &misi
     user.Proker = &proker
     user.Foto = &filename
 

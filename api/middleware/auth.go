@@ -12,7 +12,7 @@ func AuthMiddleware() gin.HandlerFunc {
     return func(ctx *gin.Context) {
         authHeader := ctx.GetHeader("Authorization")
         if (authHeader == "") {
-            ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Harap login terlebih dahulu"})
+            ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Harapp login terlebih dahulu"})
             ctx.Abort()
             return
         }

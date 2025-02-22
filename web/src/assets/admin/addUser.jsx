@@ -8,6 +8,8 @@ const AddUser = () => {
     const [kelas, setKelas] = useState("");
     const [no_urut, setNoUrut] = useState("");
     const [posisi, setPosisi] = useState("");
+    const [visi, setVisi] = useState("");
+    const [misi, setMisi] = useState("");
     const [proker, setProker] = useState("");
     const [photo, setPhoto] = useState(null);
     const [preview, setPreview] = useState(null);
@@ -30,6 +32,8 @@ const AddUser = () => {
         formData.append("kelas", kelas);
         formData.append("no_urut", no_urut);
         formData.append("posisi", posisi);
+        formData.append("visi", visi);
+        formData.append("misi", misi);
         formData.append("proker", proker);
         formData.append("photo", photo);
 
@@ -52,7 +56,7 @@ const AddUser = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-6 shadow-md rounded-md max-w-lg w-full">
-                <h2 className="text-xl font-semibold text-blue-600 mb-4 text-center">Tambah Pengguna</h2>
+                <h2 className="text-xl font-semibold text-red-600 mb-4 text-center">Tambah Pengguna</h2>
                 <form onSubmit={Register} encType="multipart/form-data">
                     <p className="text-center text-red-600">{msg}</p>
                     <div className="mb-4">
@@ -89,7 +93,7 @@ const AddUser = () => {
                         <label className="block text-gray-700 font-medium mb-1">Posisi</label>
                         <select
                             name="posisi"
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                             value={posisi}
                             onChange={(e) => setPosisi(e.target.value)}
                         >
@@ -97,6 +101,26 @@ const AddUser = () => {
                             <option value="ketua">Ketua</option>
                             <option value="wakil_ketua">Wakil Ketua</option>
                         </select>
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-medium mb-1">Visi</label>
+                        <input
+                            type="text"
+                            className="w-full p-2 border border-gray-300 rounded-md"
+                            placeholder="Masukkan Visi OSIS"
+                            value={visi}
+                            onChange={(e) => setVisi(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-medium mb-1">Misi</label>
+                        <input
+                            type="text"
+                            className="w-full p-2 border border-gray-300 rounded-md"
+                            placeholder="Masukkan Misi OSIS"
+                            value={misi}
+                            onChange={(e) => setMisi(e.target.value)}
+                        />
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 font-medium mb-1">Program Kerja</label>
@@ -121,7 +145,7 @@ const AddUser = () => {
                         )}
                     </div>
                     <div className="flex flex-col md:flex-row md:space-x-2">
-                        <button type="submit" className="w-full md:w-auto px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                        <button type="submit" className="w-full md:w-auto px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
                             Simpan
                         </button>
                         <Link to={"/admin/user"} className="w-full md:w-auto px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500 mt-2 md:mt-0">

@@ -8,6 +8,8 @@ type User struct {
 	Posisi   *string `gorm:"type:varchar(255)" json:"posisi"`
 	Email    *string `gorm:"type:varchar(255)" json:"email"`
 	Password *string `gorm:"type:varchar(255)" json:"password"`
+	Visi     *string `gorm:"type:varchar(255)" json:"visi"`
+	Misi     *string `gorm:"type:varchar(255)" json:"misi"`
 	Proker   *string `gorm:"type:varchar(255)" json:"proker"`
 	Foto     *string `gorm:"type:varchar(255)" json:"foto"`
 }

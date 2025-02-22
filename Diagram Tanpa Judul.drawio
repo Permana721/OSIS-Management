@@ -1,0 +1,91 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.0.5">
+  <diagram name="Halaman-1" id="It7dfzxIPZUFkerCzeUR">
+    <mxGraphModel dx="4107" dy="3770" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-1" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="120" y="200" width="710" height="710" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-2" value="Gambar Wakil OSIS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="260" width="240" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-3" value="Gambar Ketua OSIS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="260" width="240" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-4" value="Nama Wakil OSIS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="225" y="500" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-5" value="Nama Ketua OSIS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="575" y="500" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-8" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontColor=light-dark(#ff0000, #ededed);" vertex="1" parent="1">
+          <mxGeometry x="130" y="210" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-9" value="Visi : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="600" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-10" value="Misi : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="700" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-11" value="Program Kerja : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="800" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-12" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="980" y="200" width="710" height="710" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-13" value="Gambar Wakil OSIS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="260" width="240" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-14" value="Gambar Ketua OSIS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1370" y="260" width="240" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-15" value="Nama Wakil OSIS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1085" y="500" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-16" value="Nama Ketua OSIS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1435" y="500" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-17" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontColor=light-dark(#ff0000, #ededed);" vertex="1" parent="1">
+          <mxGeometry x="990" y="210" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-18" value="Visi : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="600" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-19" value="Misi : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="700" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-20" value="Program Kerja : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="800" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-21" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1890" y="200" width="710" height="710" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-22" value="Gambar Wakil OSIS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1930" y="260" width="240" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-23" value="Gambar Ketua OSIS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2280" y="260" width="240" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-24" value="Nama Wakil OSIS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1995" y="500" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-25" value="Nama Ketua OSIS" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2345" y="500" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-26" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontColor=light-dark(#ff0000, #ededed);" vertex="1" parent="1">
+          <mxGeometry x="1900" y="210" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-27" value="Visi : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1930" y="600" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-28" value="Misi : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1930" y="700" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ptcg49GeqkEzKIHw9cxd-29" value="Program Kerja : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1930" y="800" width="600" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

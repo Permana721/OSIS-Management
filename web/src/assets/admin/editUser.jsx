@@ -12,6 +12,8 @@ const EditUser = () => {
         kelas: user?.kelas || "",
         no_urut: user?.no_urut || "",
         posisi : user?.posisi || "",
+        visi: user?.visi || "",
+        misi: user?.misi || "",
         proker: user?.proker || "",
         foto: user?.foto || "",
     });
@@ -33,6 +35,8 @@ const EditUser = () => {
         formDataToSend.append("kelas", formData.kelas);
         formDataToSend.append("no_urut", formData.no_urut);
         formDataToSend.append("posisi", formData.posisi);
+        formDataToSend.append("visi", formData.visi);
+        formDataToSend.append("misi", formData.misi);
         formDataToSend.append("proker", formData.proker);
         
         if (formData.foto instanceof File) {
@@ -56,14 +60,14 @@ const EditUser = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-6 shadow-md rounded-md max-w-lg w-full">
-                <h2 className="text-xl font-semibold text-blue-600 mb-4 text-center">Edit Data Pengguna</h2>
+                <h2 className="text-xl font-semibold text-red-600 mb-4 text-center">Edit Data Pengguna</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-gray-700 font-medium mb-1">Nama</label>
                         <input
                             type="text"
                             name="name"
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                             placeholder="Masukkan nama OSIS"
                             value={formData.name}
                             onChange={handleChange}
@@ -74,7 +78,7 @@ const EditUser = () => {
                         <input
                             type="text"
                             name="kelas"
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                             placeholder="Masukkan kelas OSIS"
                             value={formData.kelas}
                             onChange={handleChange}
@@ -85,7 +89,7 @@ const EditUser = () => {
                         <input
                             type="number"
                             name="no_urut"
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                             placeholder="Masukkan kelas OSIS"
                             value={formData.no_urut}
                             onChange={handleChange}
@@ -95,7 +99,7 @@ const EditUser = () => {
                         <label className="block text-gray-700 font-medium mb-1">Posisi</label>
                         <select
                             name="posisi"
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                             value={formData.posisi}
                             onChange={handleChange}
                         >
@@ -105,11 +109,33 @@ const EditUser = () => {
                         </select>
                     </div>
                     <div className="mb-4">
+                        <label className="block text-gray-700 font-medium mb-1">Visi</label>
+                        <input
+                            type="text"
+                            name="visi"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                            placeholder="Masukkan Visi OSIS"
+                            value={formData.visi}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-medium mb-1">Misi</label>
+                        <input
+                            type="text"
+                            name="misi"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                            placeholder="Masukkan Misi OSIS"
+                            value={formData.misi}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="mb-4">
                         <label className="block text-gray-700 font-medium mb-1">Program Kerja</label>
                         <input
                             type="text"
                             name="proker"
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                             placeholder="Masukkan Proker OSIS"
                             value={formData.proker}
                             onChange={handleChange}
@@ -122,13 +148,13 @@ const EditUser = () => {
                             type="file"
                             name="foto"
                             accept="image/png, image/jpg, image/jpeg"
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                             onChange={handleFileChange}
                         />
                     </div>
 
                     <div className="flex flex-col md:flex-row md:space-x-2">
-                        <button type="submit" className="w-full md:w-auto px-4 py-2 cursor-pointer bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                        <button type="submit" className="w-full md:w-auto px-4 py-2 cursor-pointer bg-red-500 text-white rounded-md hover:bg-red-600">
                             Simpan
                         </button>
                         <Link to={"/admin/user"} className="w-full md:w-auto px-4 py-2 cursor-pointer bg-gray-400 text-white rounded-md hover:bg-gray-500 mt-2 md:mt-0">
