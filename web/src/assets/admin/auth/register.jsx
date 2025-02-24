@@ -22,7 +22,7 @@ const AddUser = () => {
       await axios.post("http://localhost:8000/user/register", formData, {
           headers: { "Content-Type": "multipart/form-data" },
       });
-      navigate("/admin/user");
+      navigate("/admin/login");
       } catch (error) {
         if (error.response) {
             setMsg("Terjadi kesalahan. Silakan coba lagi.");

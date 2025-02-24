@@ -12,7 +12,10 @@ const Dashboard = () => {
     const getUsers = async () => {
         try {
             const response = await axios.get("http://localhost:8000/user");
-            const grouped = response.data.reduce((acc, user) => {
+
+            const validUsers = response.data.filter(user => user.no_urut);
+
+            const grouped = validUsers.reduce((acc, user) => {
                 if (!acc[user.no_urut]) {
                     acc[user.no_urut] = { ketua: null, wakil: null, visi: "", misi: "", proker: "" };
                 }
@@ -55,7 +58,7 @@ const Dashboard = () => {
                                                 className="w-full h-full object-fit-cover" 
                                             />
                                         </div>
-                                        <p className="mt-2 text-center font-semibold">{ketua?.name || "Ketua OSIS"}</p>
+                                        <p className="mt-2 text-center font-semibold">{ketua?.name}</p>
                                     </div>
                                     <div className="flex flex-col items-center">
                                         <div className="w-32 h-32 border rounded overflow-hidden flex items-center justify-center bg-gray-200">
@@ -65,18 +68,18 @@ const Dashboard = () => {
                                                 className="w-full h-full object-fit-cover" 
                                             />
                                         </div>
-                                        <p className="mt-2 text-center font-semibold">{wakil?.name || "Wakil OSIS"}</p>
+                                        <p className="mt-2 text-center font-semibold">{wakil?.name}</p>
                                     </div>
                                 </div>
                                 <div className="mt-6">
                                     <p className="font-semibold">Visi:</p>
-                                    <p className="border-b border-gray-300 pb-1">{visi || "Belum tersedia"}</p>
+                                    <p className="border-b border-gray-300 pb-1">{visi}</p>
 
                                     <p className="font-semibold mt-2">Misi:</p>
-                                    <p className="border-b border-gray-300 pb-1">{misi || "Belum tersedia"}</p>
+                                    <p className="border-b border-gray-300 pb-1">{misi}</p>
 
                                     <p className="font-semibold mt-2">Program Kerja:</p>
-                                    <p className="border-b border-gray-300 pb-1">{proker || "Belum tersedia"}</p>
+                                    <p className="border-b border-gray-300 pb-1">{proker}</p>
                                 </div>
                             </div>
                         ))}
